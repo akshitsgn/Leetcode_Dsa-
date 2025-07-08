@@ -12,37 +12,24 @@ class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
         ListNode* temp = head;
-        stack<int>st;
         vector<int>v;
-        int cnt=0;
         while(temp!=nullptr){
-            cnt++;
-            st.push(temp->val);
-            if(cnt==k){
-              while(!st.empty()){
-                v.push_back(st.top());
-                st.pop();
-              }
-              cnt=0;
-            }
+            v.push_back(temp->val);
             temp=temp->next;
         }
-        stack<int>st1;
-        while(!st.empty()){
-                st1.push(st.top());
-                st.pop();
+        for(int i=0;i<v.size();i++){
+            if(i<k*(v.size()/k)){
+                reverse(v.begin()+(i),v.begin()+k+i);
+                i=i+k;i--;
+            }
+            else{break;}
         }
-        while(!st1.empty()){
-            v.push_back(st1.top());
-            st1.pop();
-        }
-        temp=head;
-        int cnt1=0;
+        temp=head;int cnt=0;
         while(temp!=nullptr){
-        temp->val = v[cnt1];
-        temp=temp->next;
-         cnt1++;
+            temp->val=v[cnt];
+            cnt++;
+            temp=temp->next;
         }
-            return head;
+        return head;
     }
 };
