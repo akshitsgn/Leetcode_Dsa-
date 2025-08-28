@@ -18,7 +18,7 @@ public:
         }
         int lh = (val) ? check(root->left,val) : -1 ;
         int rh = (val) ? check(root->right,val) : -1 ;
-        if(abs(lh-rh)>1 || !val){
+        if(abs(lh-rh)>1 || lh==-1 || rh==-1){
             val = false;
             return -1 ;
         }
