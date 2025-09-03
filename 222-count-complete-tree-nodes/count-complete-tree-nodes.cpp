@@ -11,26 +11,11 @@
  */
 class Solution {
 public:
-    int cntnodes(TreeNode* root,int &cnt){
-        queue<TreeNode*>q;
-        if(root==nullptr){
-            return 0;
-        }
-        q.push(root);
-        while(!q.empty()){
-            int a = q.size();
-            for(int i=0;i<a;i++){
-                if(q.front()->left){
-                    q.push(q.front()->left);
-                }
-                if(q.front()->right){
-                    q.push(q.front()->right);
-                }
-                cnt++;
-                q.pop();
-            }
-        }
-        return cnt;
+    void cntnodes(TreeNode* root,int &cnt){
+       if(root==nullptr){return;}
+       cnt++;
+       cntnodes(root->left,cnt);
+       cntnodes(root->right,cnt);
     }
     int countNodes(TreeNode* root) {
        int a = 0;
