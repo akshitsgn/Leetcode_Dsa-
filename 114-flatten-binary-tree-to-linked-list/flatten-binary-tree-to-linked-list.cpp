@@ -11,22 +11,45 @@
  */
 class Solution {
 public:
-    void preorder(vector<TreeNode*>&st,TreeNode* root){
-        if(root==nullptr){return;}
-        st.push_back(root);
-        preorder(st,root->left);
-        preorder(st,root->right);
+    TreeNode* ip(TreeNode* root){
+        TreeNode* curr = root->left;
+         while(curr->right!=nullptr && curr->right!=root){
+            curr=curr->right;
+         }
+         return curr;
     }
     void flatten(TreeNode* root) {
-        vector<TreeNode*>st;
-        if(root==nullptr){return ;}
-        preorder(st,root);
-        for(int i=0;i<st.size()-1;i++){
-            TreeNode* curr = st[i];
-            TreeNode* next = st[i+1];
-            curr->right=next;
-            curr->left = nullptr;
+       TreeNode* curr = root;
+       vector<TreeNode*>v;
+       int count=0;
+       if(root==nullptr){
+         return;
+       }
+       while(curr!=nullptr){
+           if(curr->left==nullptr){
+              v.push_back(curr);
+              //print curr;
+              curr=curr->right;
+           }
+           else{
+               TreeNode* node = ip(curr);
+               if(node->right==nullptr){
+                 v.push_back(curr);
+                //print curr;
+                node->right=curr;
+                curr=curr->left;
+               }
+               else{
+                node->right=nullptr;
+                curr=curr->right;
+               }
+           }
+       }
+      for(int i=0;i<v.size()-1;i++){
+            TreeNode* curr1 = v[i];
+            TreeNode* next = v[i+1];
+            curr1->right=next;
+            curr1->left = nullptr;
         }
-
     }
 };
